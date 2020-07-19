@@ -1,22 +1,55 @@
 * {
 	margin: 0px;
 	padding: 0px;
-	background-color: #00111c;
 	box-sizing: border-box;
 }
 
-body {
-	width: 100%;
+.back {
+	width: 80%;
 	height: 100vh;
+	min-width: 350px;
+	margin: auto;
+	z-index: -1;
+	background-color: #00111c;
+	animation: div 2s ease;
+	text-align: center;
+	display: box;
+}
+
+@keyframes div {
+	from {
+		transform: scaleX(0.5);
+	}
+	to {
+		transform: scaleX(1);
+	}
 }
 
 svg {
-	width: 400px;
+	z-index: 0;
+	width: 300px;
 	position: absolute;
-	top: 70%;
+	top: 60%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	animation: fill 0.5s ease forwards 2s;
+}
+
+#logo {
+	width: 250px;
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	animation: logo 2s ease-in;
+}
+
+@keyframes logo {
+	from {
+		opacity: 0%;
+	}
+	to {
+		opacity: 100%;
+	}
 }
 
 #N {
@@ -50,17 +83,20 @@ svg {
 	animation: line 2s ease forwards 1.5s;
 }
 
-@keyframes line {
-	to {
-		stroke-dashoffset: 0;
-	}
+#started{
+	position: absolute;
+	top: 80%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	animation: logo 2s ease-in;
 }
 
-@keyframes fill {
-	from {
-		fill: transparent;
+@keyframes line {
+	from{
+		opacity: 0%;
 	}
 	to {
-		fill: white;
+		stroke-dashoffset: 0;
+		opacity: 100%
 	}
 }

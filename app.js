@@ -11,7 +11,7 @@ app.get("/", function(req,res){
 });
 
 app.get("/index", function(req,res){
-	res.send("All note groups will be available here!");
+	res.render("index");
 });
 
 app.listen(process.env.PORT, process.env.IP, function(){
