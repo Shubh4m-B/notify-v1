@@ -4,13 +4,13 @@
 </h1>
 <a href="/index/new" class="btn btn-lg btn-primary">Add new note group</a>
 
-<% notes.forEach(function(note){ %>
+<% allGroups.forEach(function(group){ %>
 	<p>
-		<h1 style="color:<%=note.color %>">
-			<%= note.name; %>
+		<h1 style="color:<%=group.color %>">
+			<%= group.name; %>
 		</h1>
 		<p>
-			<%= note.desc; %>
+			<%= group.desc; %>
 		</p>
 	</p>
 <% }); %>
