@@ -1,3 +1,17 @@
+<%- include("partials/header.ejs"); %>
 <h1>
 	Index page
 </h1>
+<a href="/index/new" class="btn btn-lg btn-primary">Add new note group</a>
+
+<% notes.forEach(function(note){ %>
+	<p>
+		<h1 style="color:<%=note.color %>">
+			<%= note.name; %>
+		</h1>
+		<p>
+			<%= note.desc; %>
+		</p>
+	</p>
+<% }); %>
+<%- include("partials/footer.ejs"); %>

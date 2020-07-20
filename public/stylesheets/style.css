@@ -1,0 +1,11 @@
+*{
+	margin: 0px;
+	padding: 0px;
+}
+.color{
+	width:20px;
+	height:20px; 
+	display:inline-block;
+	border: 2px solid black;
+	border-radius: 5px;
+}
