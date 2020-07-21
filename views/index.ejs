@@ -1,17 +1,33 @@
 <%- include("partials/header.ejs"); %>
-<h1>
-	Index page
-</h1>
-<a href="/index/new" class="btn btn-lg btn-primary">Add new note group</a>
-
-<% allGroups.forEach(function(group){ %>
-	<p>
-		<h1 style="color:<%=group.color %>">
-			<%= group.name; %>
+<div class="jumbotron">
+	<div class="container">
+		<h1>
+			Note Groups
 		</h1>
-		<p>
-			<%= group.desc; %>
-		</p>
-	</p>
-<% }); %>
+		<a href="/index/new" class="btn btn-lg btn-primary">Add new note group</a>
+	</div>
+</div>
+
+<div class="container">
+	<div class="row">
+		<% allGroups.forEach(function(group){ %>
+			<div class="col-sm-12 col-md-6 col-lg-4">
+				<div class="card">
+					<div class="card-header">
+						<h3 style="color:<%=group.color %>">
+							<%= group.name; %>
+						</h3>
+					</div>
+					<div class="card-body" style="min-height:200px">
+						<p>
+							<%= group.desc; %>
+						</p>
+					</div>
+					<a href="#" class="btn btn-md btn-primary btn-block">Open</a>
+				</div>
+			</div>
+		<% }); %>
+	</div>
+</div>
+
 <%- include("partials/footer.ejs"); %>
