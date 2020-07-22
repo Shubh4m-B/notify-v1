@@ -1,0 +1,28 @@
+<%- include("partials/header.ejs"); %>
+
+<h1 style="color:<%=foundGroup.color %>">
+	<%=foundGroup.name %>
+</h1>
+<p style="color:white">
+	<%=foundGroup.desc %>
+</p>
+<p>
+	<a href="/index/<%=foundGroup._id %>/task" class="btn btn-lg btn-primary">Add Task/Note</a>
+</p>
+
+<% foundGroup.Task.forEach(function(task){ %>
+	<div>
+		<h3 style="color:<%=task.color %>">
+			<%= task.name %>	
+		</h3>
+		<p>
+			<%= task.desc %><br>
+			<% if(task.deadline){ %>
+				<em>Deadline: <%= task.deadline %></em>
+			<% } %>
+		</p>
+	</div>
+<% }); %>
+
+
+<%- include("partials/footer.ejs"); %>
