@@ -9,10 +9,13 @@
 			<%=foundGroup.desc %>
 		</p>
 		<div class="btn-group">
-			<a href="/index/<%=foundGroup._id %>/task" class="btn btn-md btn-primary">Add Task/Note</a>
-			<a href="/index/<%=foundGroup._id %>/edit" class="btn btn-md btn-info">Edit Group</a>
-			<a href="#" class="btn btn-md btn-danger">Delete Group</a>
+			<a href="/index/<%=foundGroup._id %>/task" class="btn btn-sm btn-primary">Add Task/Note</a>
+			<a href="/index/<%=foundGroup._id %>/edit" class="btn btn-sm btn-info">Edit Group</a>
+			<a href="#" class="btn btn-sm btn-success">Add Member</a>
 		</div>
+		<form action="/index/<%=foundGroup._id%>?_method=DELETE" method="POST" style="display:inline-block;">
+			<button class="btn btn-sm btn-danger">Delete Group</button>
+		</form>
 	</div>
 </div>
 

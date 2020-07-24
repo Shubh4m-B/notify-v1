@@ -100,6 +100,17 @@ app.put("/index/:id", function(req, res){
 	})
 });
 //DELETE GROUP ROUTE
+app.delete("/index/:id", function(req, res){
+	Group.findByIdAndDelete(req.params.id, function(err){
+		if(err){
+			console.log("Something went wrong!!")
+		}
+		else{
+			console.log("Group Deleted");
+			res.redirect("/index");
+		}
+	})
+});
 
 //NEW TASK ROUTE
 app.get("/index/:id/task", function(req,res){
