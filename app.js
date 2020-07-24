@@ -1,46 +1,32 @@
-var express 	= require("express"),
-	app 		= express(),
-	bodyParser	= require("body-parser"),	
-	mongoose	= require("mongoose"),
-	User		= require("./models/User"),
-	Group		= require("./models/Group"),
-	Task 		= require("./models/Task");
-
-// var notes = [
-// 	{
-// 		name : "Note_1",
-// 		desc : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-// 		color : "#000000",
-// 		task : [],
-// 		history : []
-// 	},
-// 	{
-// 		name : "Note_2",
-// 		desc : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-// 		color : "#000000",
-// 		task : [],
-// 		history : []
-// 	},
-// 	{
-// 		name : "Note_3",
-// 		desc : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-// 		color : "#000000",
-// 		task : [],
-// 		history : []
-// 	},
-// 	{
-// 		name : "Note_4",
-// 		desc : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-// 		color : "#000000",
-// 		task : [],
-// 		history : []
-// 	}
-// ]
+var express 			= require("express"),
+	app 				= express(),
+	bodyParser			= require("body-parser"),	
+	mongoose			= require("mongoose"),
+	passport			= require("passport"),
+	LocalStrategy		= require("passport-local"),
+	passLocalMongoose	= require("passport-local-mongoose"),
+	methodOverride		= require("method-override"),
+	
+	User				= require("./models/User"),
+	Group				= require("./models/Group"),
+	Task 				= require("./models/Task");
 
 mongoose.connect("mongodb://localhost/notify_v1", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 app.use(bodyParser.urlencoded({extended : true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+
+app.use(require("express-session")({
+	secret: "hello, I am great",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //HOME PAGE
 app.get("/", function(req,res){
@@ -61,7 +47,7 @@ app.get("/index", function(req,res){
 
 //NEW NOTE GROUP ROUTE
 app.get("/index/new", function(req, res){
-	res.render("new");
+	res.render("Group/new");
 });
 
 //CREATE NOTE GROUP ROUTE
@@ -84,10 +70,36 @@ app.get("/index/:id", function(req, res){
 			console.log("Something went wrong!!");
 		}
 		else{
-			res.render("show", {foundGroup: foundGroup});
+			res.render("Group/show", {foundGroup: foundGroup});
 		}
 	});
 });
+
+//EDIT GROUP ROUTE
+app.get("/index/:id/edit", function(req, res){
+	Group.findById(req.params.id, function(err, foundGroup){
+		if(err){
+			console.log("Something went wrong!!");
+		}
+		else{
+			res.render("Group/edit", {foundGroup: foundGroup});
+		}
+	});
+});
+
+//UPDATE GROUP ROUTE
+app.put("/index/:id", function(req, res){
+	Group.findByIdAndUpdate(req.params.id, req.body.group, function(err){
+		if(err){
+			console.log("Something went wrong!!")
+		}
+		else{
+			console.log("Group Updated");
+			res.redirect("/index/" + req.params.id);
+		}
+	})
+});
+//DELETE GROUP ROUTE
 
 //NEW TASK ROUTE
 app.get("/index/:id/task", function(req,res){
@@ -97,7 +109,7 @@ app.get("/index/:id/task", function(req,res){
 			res.redirect("/index/" + req.params.id);
 		}
 		else{
-			res.render("newTask", {foundGroup: foundGroup});
+			res.render("Task/newTask", {foundGroup: foundGroup});
 		}
 	});
 });
@@ -124,6 +136,11 @@ app.post("/index/:id", function(req, res){
 		}
 	});
 });
+
+
+//EDIT TASK ROUTE
+//UPDATE TASK ROUTE
+//DELETE TASK ROUTE
 
 app.listen(process.env.PORT, process.env.IP, function(){
 	console.log("App has been started!");

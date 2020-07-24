@@ -1,0 +1,35 @@
+<%- include("../partials/header.ejs"); %>
+
+<div class="jumbotron" style="background-color:<%= foundGroup.color%>">
+	<div class="container" style="background: rgba(0,0,0,0.5); padding:20px">
+		 <h1 style="text-shadow: #212022 5px 5px 10px;">
+			<%=foundGroup.name %>
+		</h1>
+		<p style="text-shadow: #212022 5px 5px 10px;">
+			<%=foundGroup.desc %>
+		</p>
+		<div class="btn-group">
+			<a href="/index/<%=foundGroup._id %>/task" class="btn btn-md btn-primary">Add Task/Note</a>
+			<a href="/index/<%=foundGroup._id %>/edit" class="btn btn-md btn-info">Edit Group</a>
+			<a href="#" class="btn btn-md btn-danger">Delete Group</a>
+		</div>
+	</div>
+</div>
+
+
+<% foundGroup.Task.forEach(function(task){ %>
+	<div>
+		<h3 style="color:<%=task.color %>">
+			<%= task.name %>	
+		</h3>
+		<p>
+			<%= task.desc %><br>
+			<% if(task.deadline){ %>
+				<em>Deadline: <%= task.deadline %></em>
+			<% } %>
+		</p>
+	</div>
+<% }); %>
+
+
+<%- include("../partials/footer.ejs"); %>

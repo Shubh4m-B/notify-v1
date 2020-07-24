@@ -69,6 +69,7 @@ div.container > h1{
 	color:white;
 	border: 1px solid white;
 	animation: card 0.5s ease-in;
+	transition: background 0.5s ;	
 }
 
 @keyframes card{
@@ -83,6 +84,8 @@ div.container > h1{
 #index:hover{
 	transform: scale(1.05);
 	box-shadow: #212022 15px 15px 10px;
+	background-color: #212022;
+	border: 1px solid #212022;
 }
 
 #form-card{
