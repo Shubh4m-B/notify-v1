@@ -2,6 +2,7 @@ var express 	= require("express"),
 	app 		= express(),
 	bodyParser	= require("body-parser"),	
 	mongoose	= require("mongoose"),
+	User		= require("./models/User"),
 	Group		= require("./models/Group"),
 	Task 		= require("./models/Task");
 

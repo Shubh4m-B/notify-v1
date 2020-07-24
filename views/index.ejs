@@ -1,5 +1,5 @@
 <%- include("partials/header.ejs"); %>
-<div class="jumbotron">
+<div class="jumbotron" id="jumbo-back">
 	<div class="container">
 		<h1>
 			Note Groups
@@ -12,18 +12,18 @@
 	<div class="row">
 		<% allGroups.forEach(function(group){ %>
 			<div class="col-sm-12 col-md-6 col-lg-4">
-				<div class="card">
+				<div class="card" id="index">
 					<div class="card-header">
 						<h3 style="color:<%=group.color %>">
 							<%= group.name; %>
 						</h3>
 					</div>
-					<div class="card-body" style="min-height:200px">
+					<div class="card-body" style="min-height:200px; background-color: <%=group.color %>">
 						<p>
 							<%= group.desc; %>
 						</p>
 					</div>
-					<a href="/index/<%=group._id %>" class="btn btn-md btn-primary btn-block no-radius">Open</a>
+					<a href="/index/<%=group._id %>" class="btn btn-md btn-outline-light btn-block no-radius">Open</a>
 				</div>
 			</div>
 		<% }); %>

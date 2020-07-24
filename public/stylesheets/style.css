@@ -4,6 +4,46 @@
 }
 body{
 	background-color: #363537;
+	margin: 0px;
+	margin-top: 50px;
+}
+
+.jumbotron{
+	background:none;
+	border:none;
+	background-image: url("background.png");
+	background-size: cover;
+	color: white;
+	animation: jumbotron 0.5s ease-in;
+}
+
+@keyframes jumbotron{
+	from{
+		opacity: 0%;
+	}
+	to{
+		opacity: 100%
+	}
+}
+
+.bg{
+	height: 100vh;
+	background-image: url("background.png");
+	background-size: cover;
+	margin: 0px;	
+}
+
+div.bg > h1{
+	text-shadow: #212022 5px 5px 10px;
+	padding-top: 30px;
+}
+
+div.container > .btn{
+	box-shadow: #212022 10px 10px 10px;
+}
+
+div.container > h1{
+	text-shadow: #212022 5px 5px 10px;
 }
 
 .no-radius{
@@ -24,6 +64,27 @@ body{
 	border: none;
 }
 
+#index{
+	background: transparent;
+	color:white;
+	border: 1px solid white;
+	animation: card 0.5s ease-in;
+}
+
+@keyframes card{
+	from{
+		opacity: 0%;
+	}
+	to{
+		opacity: 100%;
+	}
+}
+
+#index:hover{
+	transform: scale(1.05);
+	box-shadow: #212022 15px 15px 10px;
+}
+
 #form-card{
 	width: 40%;
 	min-width: 300px;
@@ -35,4 +96,8 @@ body{
 	margin: 20px;
 	text-align: center;
 	color: white;
+}
+
+.navbar-dark{
+	background: #212022;
 }
