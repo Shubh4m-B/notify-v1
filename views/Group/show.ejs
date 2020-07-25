@@ -2,6 +2,7 @@
 
 <div class="jumbotron" style="background-color:<%= foundGroup.color%>">
 	<div class="container" style="background: rgba(0,0,0,0.5); padding:20px">
+		
 		 <h1 style="text-shadow: #212022 5px 5px 10px;">
 			<%=foundGroup.name %>
 		</h1>
@@ -9,12 +10,12 @@
 			<%=foundGroup.desc %>
 		</p>
 		<div class="btn-group">
-			<a href="/index/<%=foundGroup._id %>/task" class="btn btn-sm btn-primary">Add Task/Note</a>
-			<a href="/index/<%=foundGroup._id %>/edit" class="btn btn-sm btn-info">Edit Group</a>
-			<a href="#" class="btn btn-sm btn-success">Add Member</a>
+			<a href="/index/<%=foundGroup._id %>/task" class="btn btn-md btn-primary"><i class="plus icon"></i></a>
+			<a href="/index/<%=foundGroup._id %>/edit" class="btn btn-md btn-info"><i class="edit icon"></i></a>
+			<a href="#" class="btn btn-md btn-success">Add Member</a>
 		</div>
-		<form action="/index/<%=foundGroup._id%>?_method=DELETE" method="POST" style="display:inline-block;">
-			<button class="btn btn-sm btn-danger">Delete Group</button>
+		<form action="/index/<%=foundGroup._id%>?_method=DELETE" method="POST" style="display:inline-block;" class="float-right">
+			<button class="btn btn-md btn-danger"><i class="trash icon"></i></button>
 		</form>
 	</div>
 </div>
@@ -30,6 +31,7 @@
 			<% if(task.deadline){ %>
 				<em>Deadline: <%= task.deadline %></em>
 			<% } %>
+			<a href="/index/<%=foundGroup._id %>/task/<%=task._id %>/edit" class="btn btn-md btn-info"><i class="edit icon"></i></a>
 		</p>
 	</div>
 <% }); %>

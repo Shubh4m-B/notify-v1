@@ -150,7 +150,37 @@ app.post("/index/:id", function(req, res){
 
 
 //EDIT TASK ROUTE
+app.get("/index/:id/task/:taskId/edit", function(req, res){
+	Group.findById(req.params.id, function(err, foundGroup){
+		if(err){
+			
+		}
+		else{
+			Task.findById(req.params.taskId, function(err, foundTask){
+				if(err){
+					console.log("Something went wrong!");
+					res.redirect("/index");
+				}
+				else{
+					res.render("Task/editTask", {foundGroup: foundGroup, foundTask: foundTask});
+				}
+			});
+		}
+	});
+});
+
 //UPDATE TASK ROUTE
+app.put("/index/:id/task/:taskId", function(req, res){
+	Task.findByIdAndUpdate(req.params.taskId, req.body.task, function(err, foundTask){
+		if(err){
+			console.log("Something went wrong!");
+			res.redirect("/index");
+		}
+		else{
+			res.redirect("/index/" + req.params.id);
+		}
+	});
+});
 //DELETE TASK ROUTE
 
 app.listen(process.env.PORT, process.env.IP, function(){
