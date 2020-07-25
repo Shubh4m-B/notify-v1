@@ -181,7 +181,20 @@ app.put("/index/:id/task/:taskId", function(req, res){
 		}
 	});
 });
+
 //DELETE TASK ROUTE
+app.delete("/index/:id/task/:taskId", function(req, res){
+	Task.findByIdAndDelete(req.params.taskId, function(err){
+		if(err){
+			console.log("Something went wrong!");
+			res.redirect("/index/" + req.params.id);
+		}
+		else{
+			console.log("Task deleted");
+			res.redirect("/index/" + req.params.id);
+		}
+	})
+});
 
 app.listen(process.env.PORT, process.env.IP, function(){
 	console.log("App has been started!");
