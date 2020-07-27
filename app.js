@@ -41,14 +41,15 @@ app.get("/", function(req,res){
 
 //INDEX ROUTE
 app.get("/index", isLoggedIn, function(req,res){
-	Group.find({}, function(err, allGroups){
+	// console.log(req.user.username);
+	User.findById(req.user.id).populate("Group").exec(function(err, foundUser){
 		if(err){
-			console.log("Something went wrong!");
+			console.log("Something went wrong!!");
 		}
 		else{
-			res.render("index", {allGroups: allGroups});
+			res.render("index", {user: foundUser});
 		}
-	})
+	});
 });
 
 //NEW NOTE GROUP ROUTE
@@ -58,15 +59,25 @@ app.get("/index/new", isLoggedIn, function(req, res){
 
 //CREATE NOTE GROUP ROUTE
 app.post("/index", isLoggedIn, function(req, res){
-	Group.create(req.body.group, function(err, group){
+	User.findById(req.user.id, function(err, user){
 		if(err){
-			console.log("Something went Wrong!");
-		}
-		else{
-			console.log("New Group Created");
+			console.log("Something went wrong!");
 			res.redirect("/index");
 		}
-	})
+		else{
+			Group.create(req.body.group, function(err, group){
+				if(err){
+					console.log("Something went wrong!")
+					res.redirect("/index");
+				}
+				else{
+					user.Group.push(group);
+					user.save();
+					res.redirect("/index");
+				}
+			});
+		}
+	});
 });
 
 //SHOW NOTE GROUP ROUTE
