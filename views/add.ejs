@@ -1,0 +1,21 @@
+<%- include("partials/header.ejs"); %>
+<div class="bg">
+	<h1 class="form-header">
+		Add User
+	</h1>
+	<form action="/index/<%= foundGroup._id %>/add" method="POST">
+		<div class="card" id="form-card">
+			<div class="card-body">
+				<div class="form-group">
+					<label for="username">Username:</label>
+					<input type="text" id="username" name="username" placeholder="Username" class="form-control">
+				</div>
+				
+				<button class="btn btn-large btn-success">
+					Add User
+				</button>
+			</div>
+		</div>
+	</form>
+</div>
+<%- include("partials/footer.ejs"); %>

@@ -44,7 +44,7 @@ app.get("/index", isLoggedIn, function(req,res){
 	// console.log(req.user.username);
 	User.findById(req.user.id).populate("Group").exec(function(err, foundUser){
 		if(err){
-			console.log("Something went wrong!!");
+			console.log("Something went wrong in index route!!");
 		}
 		else{
 			res.render("index", {user: foundUser});
@@ -61,13 +61,14 @@ app.get("/index/new", isLoggedIn, function(req, res){
 app.post("/index", isLoggedIn, function(req, res){
 	User.findById(req.user.id, function(err, user){
 		if(err){
-			console.log("Something went wrong!");
+			console.log("Something went wrong in create note!");
 			res.redirect("/index");
 		}
 		else{
 			Group.create(req.body.group, function(err, group){
+				
 				if(err){
-					console.log("Something went wrong!")
+					// console.log("Something went wrong create note!!")
 					res.redirect("/index");
 				}
 				else{
@@ -81,10 +82,11 @@ app.post("/index", isLoggedIn, function(req, res){
 });
 
 //SHOW NOTE GROUP ROUTE
-app.get("/index/:id", isLoggedIn, function(req, res){
+app.get("/index/:id/show", isLoggedIn, function(req, res){
 	Group.findById(req.params.id).populate("Task").exec(function(err, foundGroup){
 		if(err){
-			console.log("Something went wrong!!");
+			console.log("Something went wrong in show route!!");
+			console.log(err);
 		}
 		else{
 			res.render("Group/show", {foundGroup: foundGroup});
@@ -96,7 +98,7 @@ app.get("/index/:id", isLoggedIn, function(req, res){
 app.get("/index/:id/edit", isLoggedIn, function(req, res){
 	Group.findById(req.params.id, function(err, foundGroup){
 		if(err){
-			console.log("Something went wrong!!");
+			console.log("Something went wrong edit group!!");
 		}
 		else{
 			res.render("Group/edit", {foundGroup: foundGroup});
@@ -108,19 +110,20 @@ app.get("/index/:id/edit", isLoggedIn, function(req, res){
 app.put("/index/:id", isLoggedIn, function(req, res){
 	Group.findByIdAndUpdate(req.params.id, req.body.group, function(err){
 		if(err){
-			console.log("Something went wrong!!")
+			console.log("Something went wrong in update group!!")
 		}
 		else{
 			console.log("Group Updated");
-			res.redirect("/index/" + req.params.id);
+			res.redirect("/index/" + req.params.id + "/show");
 		}
 	})
 });
+
 //DELETE GROUP ROUTE
 app.delete("/index/:id", isLoggedIn, function(req, res){
 	Group.findByIdAndDelete(req.params.id, function(err){
 		if(err){
-			console.log("Something went wrong!!")
+			console.log("Something went wrong in delete group!!")
 		}
 		else{
 			console.log("Group Deleted");
@@ -129,12 +132,52 @@ app.delete("/index/:id", isLoggedIn, function(req, res){
 	})
 });
 
+//Add USER ROUTE
+app.get("/index/:id/add", function(req, res){
+	Group.findById(req.params.id, function(err, foundGroup){
+		if(err){
+			console.log("Something went wrong in get add user!");
+		}
+		else{
+			res.render("add", {foundGroup: foundGroup});
+		}
+	});
+});
+
+//Add USER Logic
+app.post("/index/:id/add", function(req, res){
+	User.findOne({username: req.body.username}, function(err, foundUser){
+		console.log(foundUser);
+		if(err){
+			console.log(err);
+			// console.log("Something went wrong in post add user!");
+			res.redirect("/index");
+		}
+		else{
+			Group.findById(req.params.id, function(err, foundGroup){
+				console.log(foundGroup);
+				if(err){
+					// console.log("Something went wrong during finding!");
+					console.log(err);
+				}
+				else{
+					foundUser.Group.push(foundGroup);
+					foundUser.save();
+					// console.log(foundUser);
+					// console.log("User Added");
+					res.redirect("/index/" + req.params.id + "/show");
+				}
+			});
+		}
+	});
+});
+
 //NEW TASK ROUTE
 app.get("/index/:id/task", isLoggedIn, function(req,res){
 	Group.findById(req.params.id, function(err, foundGroup){
 		if(err){
 			console.log("Something went wrong!!");
-			res.redirect("/index/" + req.params.id);
+			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else{
 			res.render("Task/newTask", {foundGroup: foundGroup});
@@ -158,7 +201,7 @@ app.post("/index/:id", isLoggedIn, function(req, res){
 				else{
 					group.Task.push(task);
 					group.save();
-					res.redirect("/index/" + group._id);
+					res.redirect("/index/" + group._id +"/show");
 				}
 			});
 		}
@@ -194,7 +237,7 @@ app.put("/index/:id/task/:taskId", isLoggedIn, function(req, res){
 			res.redirect("/index");
 		}
 		else{
-			res.redirect("/index/" + req.params.id);
+			res.redirect("/index/" + req.params.id + "/show");
 		}
 	});
 });
@@ -204,11 +247,11 @@ app.delete("/index/:id/task/:taskId", isLoggedIn, function(req, res){
 	Task.findByIdAndDelete(req.params.taskId, function(err){
 		if(err){
 			console.log("Something went wrong!");
-			res.redirect("/index/" + req.params.id);
+			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else{
 			console.log("Task deleted");
-			res.redirect("/index/" + req.params.id);
+			res.redirect("/index/" + req.params.id + "/show");
 		}
 	})
 });
