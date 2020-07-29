@@ -1,10 +1,6 @@
-*{
-	margin: 0px;
-	padding: 0px;
-}
 body{
 	background-color: #363537;
-	margin: 0px;
+	
 	margin-top: 50px;
 }
 
@@ -103,4 +99,11 @@ div.container > h1{
 
 .navbar-dark{
 	background: #212022;
+}
+
+.task-list{
+	padding: 20px;
+	background: rgba(255,255,255,0.7);
+	border-radius:5px;
+	
 }

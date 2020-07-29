@@ -21,24 +21,35 @@
 </div>
 
 
-<% foundGroup.Task.forEach(function(task){ %>
-	<div>
-		<h3 style="color:<%=task.color %>">
-			<%= task.name %>	
-		</h3>
-		<p>
-			<%= task.desc %><br>
-			<% if(task.deadline){ %>
-				<em>Deadline: <%= task.deadline %></em>
-			<% } %>
-			
-		</p>
-		<a href="/index/<%=foundGroup._id %>/task/<%=task._id %>/edit" class="btn btn-md btn-info"><i class="edit icon"></i></a>
-		<form action="/index/<%=foundGroup._id%>/task/<%=task._id %>?_method=DELETE" method="POST" style="display:inline-block;" >
-			<button class="btn btn-md btn-danger"><i class="trash icon"></i></button>
-		</form>
+<div class="container">
+	<div class="row">
+		<div class="col-lg-4 offset-lg-4 task-list">
+			<h2>
+				Tasks
+				<hr>
+			</h2>
+			<% foundGroup.Task.forEach(function(task){ %>
+				<div>
+					<h3 style="color:<%=task.color %>">
+						<%= task.name %>	
+					</h3>
+					<p>
+						<%= task.desc %><br>
+						<% if(task.deadline){ %>
+							<em>Deadline: <%= task.deadline %></em>
+						<% } %>
+
+					</p>
+					<a href="/index/<%=foundGroup._id %>/task/<%=task._id %>/edit" class="btn btn-md btn-info"><i class="edit icon"></i></a>
+					<form action="/index/<%=foundGroup._id%>/task/<%=task._id %>?_method=DELETE" method="POST" style="display:inline-block;" >
+						<button class="btn btn-md btn-danger"><i class="trash icon"></i></button>
+					</form>
+					<hr>
+				</div>
+			<% }); %>
+		</div>
 	</div>
-<% }); %>
+</div>
 
 
 <%- include("../partials/footer.ejs"); %>

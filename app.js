@@ -147,7 +147,7 @@ app.get("/index/:id/add", function(req, res){
 //Add USER Logic
 app.post("/index/:id/add", function(req, res){
 	User.findOne({username: req.body.username}, function(err, foundUser){
-		console.log(foundUser);
+		// console.log(foundUser);
 		if(err){
 			console.log(err);
 			// console.log("Something went wrong in post add user!");
