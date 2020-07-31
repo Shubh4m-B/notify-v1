@@ -172,18 +172,7 @@ app.post("/index/:id/add", function(req, res){
 	});
 });
 
-//NEW TASK ROUTE
-app.get("/index/:id/task", isLoggedIn, function(req,res){
-	Group.findById(req.params.id, function(err, foundGroup){
-		if(err){
-			console.log("Something went wrong!!");
-			res.redirect("/index/" + req.params.id + "/show");
-		}
-		else{
-			res.render("Task/newTask", {foundGroup: foundGroup});
-		}
-	});
-});
+
 
 //CREATE NEW TASK
 app.post("/index/:id", isLoggedIn, function(req, res){

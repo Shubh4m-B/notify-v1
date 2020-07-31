@@ -107,3 +107,8 @@ div.container > h1{
 	border-radius:5px;
 	
 }
+
+.modal-header{
+	color: white;
+	background: #212022; 
+}
