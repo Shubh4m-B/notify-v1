@@ -94,18 +94,6 @@ app.get("/index/:id/show", isLoggedIn, function(req, res){
 	});
 });
 
-//EDIT GROUP ROUTE
-app.get("/index/:id/edit", isLoggedIn, function(req, res){
-	Group.findById(req.params.id, function(err, foundGroup){
-		if(err){
-			console.log("Something went wrong edit group!!");
-		}
-		else{
-			res.render("Group/edit", {foundGroup: foundGroup});
-		}
-	});
-});
-
 //UPDATE GROUP ROUTE
 app.put("/index/:id", isLoggedIn, function(req, res){
 	Group.findByIdAndUpdate(req.params.id, req.body.group, function(err){
@@ -133,18 +121,6 @@ app.delete("/index/:id", isLoggedIn, function(req, res){
 });
 
 //Add USER ROUTE
-app.get("/index/:id/add", function(req, res){
-	Group.findById(req.params.id, function(err, foundGroup){
-		if(err){
-			console.log("Something went wrong in get add user!");
-		}
-		else{
-			res.render("add", {foundGroup: foundGroup});
-		}
-	});
-});
-
-//Add USER Logic
 app.post("/index/:id/add", function(req, res){
 	User.findOne({username: req.body.username}, function(err, foundUser){
 		// console.log(foundUser);

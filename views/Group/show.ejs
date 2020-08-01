@@ -12,11 +12,9 @@
 		<div class="btn-group">
 			<a data-toggle="modal" data-target="#newTask" class="btn btn-md btn-primary"><i class="plus icon"></i></a>
 			<a data-toggle="modal" data-target="#editGroup" class="btn btn-md btn-info"><i class="edit icon"></i></a>
-			<a href="/index/<%=foundGroup._id %>/add" class="btn btn-md btn-success">Add Member</a>
+			<a data-toggle="modal" data-target="#addMember" class="btn btn-md btn-success">Add Member</a>
 		</div>
-		<form action="/index/<%=foundGroup._id%>?_method=DELETE" method="POST" style="display:inline-block;" class="float-right">
-			<button class="btn btn-md btn-danger"><i class="trash icon"></i></button>
-		</form>
+		<a data-toggle="modal" data-target="#deleteGroup" class="btn btn-md btn-danger float-right" style="box-shadow:none"><i class="trash icon"></i></a>
 	</div>
 </div>
 
@@ -52,135 +50,193 @@
 </div>
 
 <!-- Modals -->
-
-<!-- Add new task modal -->
-<div class="modal fade" id="newTask" tabindex="-1" role="dialog" aria-labelledby="newTask" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="newTaskTitle">Add New Task/Note</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" style="color:white">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form action="/index/<%=foundGroup._id %>" method="post">
-			<div class="form-group">
-				<label for="name">Name/Title:</label>
-				<input type="text" id="name" name="task[name]" placeholder="Name" class="form-control">
+<!--  Add New Task -->
+<div id="newTask" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-md" role="content">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Create Note/Task </h4>
+				<button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
 			</div>
-			<div class="form-group">
-				<label for="desc">Description:</label>
-				<input type="text" id="desc" name="task[desc]" placeholder="Description" class="form-control">
+			<div class="modal-body">
+				<form action="/index/<%=foundGroup._id %>" method="post">
+					
+							<div class="form-group">
+								<label for="name">Name/Title:</label>
+								<input type="text" id="name" name="task[name]" placeholder="Name" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="desc">Description:</label>
+								<input type="text" id="desc" name="task[desc]" placeholder="Description" class="form-control">
+							</div>
+							<div class="form-group">
+								<label for="color-group">Choose color:</label>
+									<div id="color-group">
+										<div class="row">
+											<div class="col-6">
+												<div class="form-check form-check-inline">
+												  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio1" value="#EF2D56">
+												  <label class="form-check-label" for="inlineRadio1"><div style="background-color:#EF2D56" class="color"></div></label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-check form-check-inline">
+												  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio2" value="#ED7D3A">
+												  <label class="form-check-label" for="inlineRadio2"><div style="background-color:#ED7D3A" class="color"></div></label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-6">
+												<div class="form-check form-check-inline">
+												  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio3" value="#1EA896">
+												  <label class="form-check-label" for="inlineRadio3"><div style="background-color:#1EA896" class="color"></div></label>
+												</div>
+											</div>
+											<div class="col-6">
+												<div class="form-check form-check-inline">
+												  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio4" value="#2FBF71">
+												  <label class="form-check-label" for="inlineRadio4"><div style="background-color:#2FBF71" class="color"></div></label>
+												</div>
+											</div>
+										</div>	
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="deadline">Deadline (If Any):</label>
+									<input type="text" id="deadline" name="task[deadline]" placeholder="Deadline" class="form-control">
+								</div>
+							<button class="btn btn-large btn-dark mt-3" data-dismiss="modal">
+								Cancel
+							</button>	
+							<button type="submit" class="btn btn-large btn-success mt-3">
+								Create Note/Task
+							</button>
+						
+					</form>
 			</div>
-			<div class="form-group">
-				<label for="color-group">Choose color:</label>
-					<div id="color-group">
-					<div class="row">
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio1" value="#EF2D56">
-								  <label class="form-check-label" for="inlineRadio1"><div style="background-color:#EF2D56" class="color"></div> Red Crayola</label>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio2" value="#ED7D3A">
-								  <label class="form-check-label" for="inlineRadio2"><div style="background-color:#ED7D3A" class="color"></div> Princeton Orange</label>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio3" value="#1EA896">
-								  <label class="form-check-label" for="inlineRadio3"><div style="background-color:#1EA896" class="color"></div> Persian Green</label>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="form-check form-check-inline">
-								  <input class="form-check-input" type="radio" name="task[color]" id="inlineRadio4" value="#2FBF71">
-								  <label class="form-check-label" for="inlineRadio4"><div style="background-color:#2FBF71" class="color"></div> Emerald</label>
-							</div>
-						</div>
-					</div>	
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="deadline">Deadline (If Any):</label>
-				<input type="text" id="deadline" name="task[deadline]" placeholder="Deadline" class="form-control">
-			</div>	
-			<button class="btn btn-large btn-success m-3" >
-				Create Note/Task
-			</button>
-		</form>
-    </div>
-  </div>
+		</div>
+	</div>
 </div>
 
-<!-- Edit Group Modal -->
-<div class="modal fade" id="editGroup" tabindex="-1" role="dialog" aria-labelledby="editGroup" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 class="modal-title" id="editGroupTitle">Edit Group</h3>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" style="color:white">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-		<form action="/index/<%=foundGroup._id %>/?_method=PUT" method="POST">
-		
-			
-				<div class="form-group">
-					<label for="name">Name/Title:</label>
-					<input type="text" id="name" name="group[name]" value="<%=foundGroup.name %>" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="desc">Description:</label>
-					<input type="text" id="desc" name="group[desc]" value="<%=foundGroup.desc%>" class="form-control">
-				</div>
-				<div class="form-group">
-					<label for="color-group">Choose color:</label>
-						<div id="color-group">
-							<div class="row">
-								<div class="col-6">
-									<div class="form-check form-check-inline">
-									  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio1" value="#EF2D56">
-									  <label class="form-check-label" for="inlineRadio1"><div style="background-color:#EF2D56" class="color"></div></label>
+<!-- Edit Note Group -->
+<div id="editGroup" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-md" role="content">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Edit Note Group </h4>
+				<button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="/index/<%=foundGroup._id %>/?_method=PUT" method="POST">
+				
+						<div class="form-group">
+							<label for="name">Name/Title:</label>
+							<input type="text" id="name" name="group[name]" value="<%=foundGroup.name %>" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="desc">Description:</label>
+							<input type="text" id="desc" name="group[desc]" value="<%=foundGroup.desc%>" class="form-control">
+						</div>
+						<div class="form-group">
+							<label for="color-group">Choose color:</label>
+								<div id="color-group">
+									<div class="row">
+										<div class="col-6">
+											<div class="form-check form-check-inline">
+											  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio1" value="#EF2D56">
+											  <label class="form-check-label" for="inlineRadio1"><div style="background-color:#EF2D56" class="color"></div></label>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-check form-check-inline">
+											  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio2" value="#ED7D3A">
+											  <label class="form-check-label" for="inlineRadio2"><div style="background-color:#ED7D3A" class="color"></div></label>
+											</div>
+										</div>
 									</div>
-								</div>
-								<div class="col-6">
-									<div class="form-check form-check-inline">
-									  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio2" value="#ED7D3A">
-									  <label class="form-check-label" for="inlineRadio2"><div style="background-color:#ED7D3A" class="color"></div></label>
-									</div>
+									<div class="row">
+										<div class="col-6">
+											<div class="form-check form-check-inline">
+											  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio3" value="#1EA896">
+											  <label class="form-check-label" for="inlineRadio3"><div style="background-color:#1EA896" class="color"></div></label>
+											</div>
+										</div>
+										<div class="col-6">
+											<div class="form-check form-check-inline">
+											  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio4" value="#2FBF71">
+											  <label class="form-check-label" for="inlineRadio4"><div style="background-color:#2FBF71" class="color"></div></label>
+											</div>
+										</div>
+									</div>	
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-6">
-									<div class="form-check form-check-inline">
-									  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio3" value="#1EA896">
-									  <label class="form-check-label" for="inlineRadio3"><div style="background-color:#1EA896" class="color"></div></label>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="form-check form-check-inline">
-									  <input class="form-check-input" type="radio" name="group[color]" id="inlineRadio4" value="#2FBF71">
-									  <label class="form-check-label" for="inlineRadio4"><div style="background-color:#2FBF71" class="color"></div></label>
-									</div>
-								</div>
-							</div>	
-						</div>
+						<button class="btn btn-large btn-dark mt-3" data-dismiss="modal">
+							Cancel
+						</button>
+						<button type="submit" class="btn btn-large btn-success mt-3">
+							Save and Update
+						</button>
+					
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add New Member -->
+<div id="addMember" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-md" role="content">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Add a New Member</h4>
+				<button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="/index/<%= foundGroup._id %>/add" method="POST">
+					<div class="form-group">
+						<label for="username">Username:</label>
+						<input type="text" id="username" name="username" placeholder="Username" class="form-control">
 					</div>
-				
-				<button class="btn btn-large btn-success">
-					Save and Update
-				</button>
-			
-		</form>
-    </div>
-  </div>
+					<button class="btn btn-large btn-dark mt-3" data-dismiss="modal">
+						Cancel
+					</button>
+					<button class="btn btn-large btn-success mt-3">
+						Add User
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Delete Confirmation -->
+<div id="deleteGroup" class="modal fade" role="dialog">
+	<div class="modal-dialog modal-md" role="content">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header" style="background:#dc3545">
+				<h4 class="modal-title">Delete Group</h4>
+				<button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
+			</div>
+			<div class="modal-body">
+				<form action="/index/<%= foundGroup._id %>?_method=DELETE" method="POST">
+					<div>
+						Permanently delete this group?
+					</div>
+					<button class="btn btn-large btn-dark mt-3" data-dismiss="modal">
+						Cancel
+					</button>
+					<button type="submit" class="btn btn-large btn-danger mt-3">
+						Delete
+					</button>
+				</form>
+			</div>
+		</div>
+	</div>
 </div>
 	
 
