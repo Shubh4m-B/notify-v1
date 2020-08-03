@@ -6,6 +6,7 @@ var express 			= require("express"),
 	LocalStrategy		= require("passport-local"),
 	passLocalMongoose	= require("passport-local-mongoose"),
 	methodOverride		= require("method-override"),
+	flash				= require("connect-flash"),
 	
 	User				= require("./models/User"),
 	Group				= require("./models/Group"),
@@ -15,6 +16,7 @@ mongoose.connect("mongodb://localhost/notify_v2", {useNewUrlParser: true, useUni
 app.use(bodyParser.urlencoded({extended : true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(flash());
 app.use(methodOverride("_method"));
 
 app.use(require("express-session")({
@@ -31,6 +33,9 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
+	res.locals.error = req.flash("error");
+	res.locals.warning = req.flash("warning");
+	res.locals.success = req.flash("success");
 	next();
 });
 
@@ -79,6 +84,7 @@ app.post("/index", isLoggedIn, function(req, res){
 				else{
 					user.Group.push(group);
 					user.save();
+					req.flash("success", "Note Group Created");
 					res.redirect("/index");
 				}
 			});
@@ -107,6 +113,7 @@ app.put("/index/:id", isLoggedIn, function(req, res){
 		}
 		else{
 			console.log("Group Updated");
+			req.flash("success", "Group Updated");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 	})
@@ -120,6 +127,7 @@ app.delete("/index/:id", isLoggedIn, function(req, res){
 		}
 		else{
 			console.log("Group Deleted");
+			req.flash("danger", "Note Group Deleted");
 			res.redirect("/index");
 		}
 	})
@@ -132,10 +140,11 @@ app.post("/index/:id/add", function(req, res){
 		if(err){
 			console.log(err);
 			// console.log("Something went wrong in post add user!");
-			res.redirect("/index");
+			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else if(foundUser === null){
 			console.log("User not found!");
+			req.flash("danger", "User does not exist!");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else{
@@ -156,6 +165,7 @@ app.post("/index/:id/add", function(req, res){
 					}
 					if(found === true){
 						console.log("User already a member!")
+						req.flash("danger", "User already a member!");
 						res.redirect("/index/" + req.params.id + "/show");
 					}
 					else{
@@ -165,6 +175,7 @@ app.post("/index/:id/add", function(req, res){
 						foundUser.save();
 						// console.log(foundUser);
 						console.log("User Added");
+						req.flash("success", "User added");
 						res.redirect("/index/" + req.params.id + "/show");
 					}
 				}
@@ -191,6 +202,7 @@ app.post("/index/:id", isLoggedIn, function(req, res){
 				else{
 					group.Task.push(task);
 					group.save();
+					req.flash("success", "Task added");
 					res.redirect("/index/" + group._id +"/show");
 				}
 			});
@@ -227,6 +239,7 @@ app.put("/index/:id/task/:taskId", isLoggedIn, function(req, res){
 			res.redirect("/index");
 		}
 		else{
+			req.flash("success", "Task updated");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 	});
@@ -240,6 +253,7 @@ app.delete("/index/:id/task/:taskId", isLoggedIn, function(req, res){
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else{
+			req.flash("danger", "Task deleted");
 			console.log("Task deleted");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
@@ -259,6 +273,7 @@ app.get("/register", function(req, res){
 app.post("/register", function(req, res){
 	User.register(new User({username: req.body.username}), req.body.password, function(err, user){
 		if(err){
+			req.flash("warning", "Oops....Try another username!");
 			console.log("Something went wrong!");
 			console.log(err);
 			return res.render("Auth/register");
@@ -266,6 +281,7 @@ app.post("/register", function(req, res){
 		
 		passport.authenticate("local")(req, res, function(){
 			console.log("Signed in successfully!");
+			req.flash("success", "Signed up successfully");
 			res.redirect("/index");
 		})
 	});
@@ -288,6 +304,7 @@ app.post("/login", passport.authenticate("local", {
 //Logout Logic
 app.get("/logout", function(req, res){
 	req.logout();
+	req.flash("success", "Succesfully logged out");
 	res.redirect("/");
 });
 

@@ -1,6 +1,6 @@
 body{
 	background-color: #363537;
-	
+	z-index:0;
 	margin-top: 50px;
 }
 
@@ -101,7 +101,7 @@ div.container > h1{
 	background: #212022;
 }
 
-.list{
+.task-list{
 	padding: 20px;
 	background: rgba(255,255,255,0.7);
 	border-radius:5px;
@@ -109,7 +109,45 @@ div.container > h1{
 	
 }
 
+.member-list{
+	padding: 20px;
+	background: rgba(255,255,255,0.7);
+	border-radius:5px;
+	margin: 10px;
+    height: 200px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
 .modal-header{
 	color: white;
 	background: #212022; 
+}
+
+#flash-success{
+	background-color: rgba(115, 255, 124, 0.4);
+	border-color: #73ff7c; 
+	color: #73ff7c;
+	margin-top: 20px;
+}
+#flash-danger{
+	background-color: rgba(255, 145, 145, 0.3) ;
+	border-color: #ff9191;
+	color: #ff9191;
+	margin-top: 20px;
+}
+#flash-warning{
+	background-color: rgba(255, 229, 145, 0.3);
+	border-color: #ffe591; 
+	color: #ffe591;
+	margin-top: 20px;
+}
+
+#flash-msg{
+	max-width: 700px;
+	position: absolute;
+	z-index: 2;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

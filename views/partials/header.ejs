@@ -39,3 +39,20 @@
 				</div>
 			</div>
 		</nav>	
+		<div class="container" id="flash-msg">
+			<% if(success && success.length > 0){ %>
+				<div class="alert alert-success" id="flash-success" role="alert">
+				<%= success %>
+				</div>
+			<% } %>
+			<% if(error && error.length > 0){ %>
+				<div class="alert alert-danger" id="flash-danger" role="alert">
+					<%= error %>
+				</div>
+			<% } %>
+			<% if(warning && warning.length > 0){ %>
+				<div class="alert alert-warning" id="flash-warning" role="alert">
+					<%= warning %>
+				</div>
+			<% } %>
+		</div>
