@@ -21,7 +21,23 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-lg-4 offset-lg-4 task-list">
+		<div class="col-lg-4 list">
+			<h2>
+				Members
+				<hr>
+			</h2>
+			<div>
+				<strong><%= foundGroup.owner%></strong><span class="badge badge-pill badge-success float-right">Owner</span>
+				<hr>
+			</div>
+			<% foundGroup.User.forEach(function(user){ %>
+				<div>
+					<%=user.username%>
+					<hr>
+				</div>
+			<% }) %>
+		</div>
+		<div class="col-lg-4 list">
 			<h2>
 				Tasks
 				<hr>
@@ -238,6 +254,7 @@
 		</div>
 	</div>
 </div>
-	
+
+
 
 <%- include("../partials/footer.ejs"); %>

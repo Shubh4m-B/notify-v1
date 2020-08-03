@@ -11,7 +11,7 @@ var express 			= require("express"),
 	Group				= require("./models/Group"),
 	Task 				= require("./models/Task");
 
-mongoose.connect("mongodb://localhost/notify_v1", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+mongoose.connect("mongodb://localhost/notify_v2", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 app.use(bodyParser.urlencoded({extended : true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
@@ -65,7 +65,12 @@ app.post("/index", isLoggedIn, function(req, res){
 			res.redirect("/index");
 		}
 		else{
-			Group.create(req.body.group, function(err, group){
+			Group.create({
+					name: req.body.group.name,
+					desc: req.body.group.desc,
+					color: req.body.group.color,
+					owner: user.username
+				}, function(err, group){
 				
 				if(err){
 					// console.log("Something went wrong create note!!")
@@ -74,6 +79,7 @@ app.post("/index", isLoggedIn, function(req, res){
 				else{
 					user.Group.push(group);
 					user.save();
+					console.log(user.Group);
 					res.redirect("/index");
 				}
 			});
@@ -83,7 +89,7 @@ app.post("/index", isLoggedIn, function(req, res){
 
 //SHOW NOTE GROUP ROUTE
 app.get("/index/:id/show", isLoggedIn, function(req, res){
-	Group.findById(req.params.id).populate("Task").exec(function(err, foundGroup){
+	Group.findById(req.params.id).populate("Task").populate("User").exec(function(err, foundGroup){
 		if(err){
 			console.log("Something went wrong in show route!!");
 			console.log(err);
@@ -131,12 +137,19 @@ app.post("/index/:id/add", function(req, res){
 		}
 		else{
 			Group.findById(req.params.id, function(err, foundGroup){
-				console.log(foundGroup);
+				// console.log(foundGroup);
 				if(err){
 					// console.log("Something went wrong during finding!");
 					console.log(err);
+					res.redirect("/index/" + req.params.id + "/show");
+				}
+				else if(foundGroup.User.find({username:foundUser.username})){
+					console.log("User already a member!");
+					res.redirect("/index/" + req.params.id + "/show");
 				}
 				else{
+					foundGroup.User.push(foundUser);
+					foundGroup.save();
 					foundUser.Group.push(foundGroup);
 					foundUser.save();
 					// console.log(foundUser);

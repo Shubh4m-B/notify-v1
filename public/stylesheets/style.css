@@ -101,10 +101,11 @@ div.container > h1{
 	background: #212022;
 }
 
-.task-list{
+.list{
 	padding: 20px;
 	background: rgba(255,255,255,0.7);
 	border-radius:5px;
+	margin: 10px;
 	
 }
 
