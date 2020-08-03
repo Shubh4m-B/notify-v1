@@ -79,7 +79,6 @@ app.post("/index", isLoggedIn, function(req, res){
 				else{
 					user.Group.push(group);
 					user.save();
-					console.log(user.Group);
 					res.redirect("/index");
 				}
 			});
@@ -135,6 +134,10 @@ app.post("/index/:id/add", function(req, res){
 			// console.log("Something went wrong in post add user!");
 			res.redirect("/index");
 		}
+		else if(foundUser === null){
+			console.log("User not found!");
+			res.redirect("/index/" + req.params.id + "/show");
+		}
 		else{
 			Group.findById(req.params.id, function(err, foundGroup){
 				// console.log(foundGroup);
@@ -143,18 +146,27 @@ app.post("/index/:id/add", function(req, res){
 					console.log(err);
 					res.redirect("/index/" + req.params.id + "/show");
 				}
-				else if(foundGroup.User.find({username:foundUser.username})){
-					console.log("User already a member!");
-					res.redirect("/index/" + req.params.id + "/show");
-				}
+				
 				else{
-					foundGroup.User.push(foundUser);
-					foundGroup.save();
-					foundUser.Group.push(foundGroup);
-					foundUser.save();
-					// console.log(foundUser);
-					// console.log("User Added");
-					res.redirect("/index/" + req.params.id + "/show");
+					var found = false;
+					for(var i = 0; i< foundGroup.User.length; i++){
+						if(foundGroup.User[i]._id.equals(foundUser._id) || (foundGroup.owner === foundUser.username)){
+							found = true;
+						}
+					}
+					if(found === true){
+						console.log("User already a member!")
+						res.redirect("/index/" + req.params.id + "/show");
+					}
+					else{
+						foundGroup.User.push(foundUser);
+						foundGroup.save();
+						foundUser.Group.push(foundGroup);
+						foundUser.save();
+						// console.log(foundUser);
+						console.log("User Added");
+						res.redirect("/index/" + req.params.id + "/show");
+					}
 				}
 			});
 		}
