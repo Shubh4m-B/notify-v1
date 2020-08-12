@@ -84,6 +84,8 @@ app.post("/index", isLoggedIn, function(req, res){
 				else{
 					user.Group.push(group);
 					user.save();
+					group.User.push(user);
+					group.save();
 					req.flash("success", "Note Group Created");
 					res.redirect("/index");
 				}
@@ -163,7 +165,7 @@ app.post("/index/:id/add", function(req, res){
 					}
 					if(found === true){
 						console.log("User already a member!")
-						// req.flash("danger", "User already a member!");
+						req.flash("danger", "User already a member!");
 						res.redirect("/index/" + req.params.id + "/show");
 					}
 					else{
