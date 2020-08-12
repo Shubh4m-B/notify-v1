@@ -139,33 +139,31 @@ app.post("/index/:id/add", function(req, res){
 		// console.log(foundUser);
 		if(err){
 			console.log(err);
-			// console.log("Something went wrong in post add user!");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else if(foundUser === null){
 			req.flash("danger", "User does not exist!");
-			console.log("User not found!");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else{
 			Group.findById(req.params.id, function(err, foundGroup){
-				// console.log(foundGroup);
 				if(err){
-					// console.log("Something went wrong during finding!");
 					console.log(err);
 					res.redirect("/index/" + req.params.id + "/show");
 				}
 				
 				else{
 					var found = false;
+					console.log(foundGroup.owner);
+					console.log(foundUser.username);
 					for(var i = 0; i< foundGroup.User.length; i++){
-						if(foundGroup.User[i]._id.equals(foundUser._id) || (foundGroup.owner === foundUser.username)){
+						if(foundGroup.User[i]._id.equals(foundUser._id) || (req.user.username === foundUser.username)){
 							found = true;
 						}
 					}
 					if(found === true){
 						console.log("User already a member!")
-						req.flash("danger", "User already a member!");
+						// req.flash("danger", "User already a member!");
 						res.redirect("/index/" + req.params.id + "/show");
 					}
 					else{
@@ -273,9 +271,7 @@ app.get("/register", function(req, res){
 app.post("/register", function(req, res){
 	User.register(new User({username: req.body.username}), req.body.password, function(err, user){
 		if(err){
-			req.flash("warning", "Oops....Try another username!");
-			console.log("Something went wrong!");
-			console.log(err);
+			req.flash("warning", "Try another username!");
 			return res.render("Auth/register");
 		}
 		

@@ -137,9 +137,9 @@ div.container > h1{
 	margin-top: 20px;
 }
 #flash-warning{
-	background-color: rgba(255, 229, 145, 0.3);
-	border-color: #ffe591; 
-	color: #ffe591;
+	background-color: rgba(189, 167, 98, 0.5);
+	border-color: white; 
+	color: white;
 	margin-top: 20px;
 }
 
