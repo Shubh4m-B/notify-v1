@@ -33,7 +33,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next){
 	res.locals.currentUser = req.user;
-	res.locals.error = req.flash("error");
+	res.locals.danger = req.flash("danger");
 	res.locals.warning = req.flash("warning");
 	res.locals.success = req.flash("success");
 	next();
@@ -143,8 +143,8 @@ app.post("/index/:id/add", function(req, res){
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else if(foundUser === null){
-			console.log("User not found!");
 			req.flash("danger", "User does not exist!");
+			console.log("User not found!");
 			res.redirect("/index/" + req.params.id + "/show");
 		}
 		else{
@@ -175,7 +175,7 @@ app.post("/index/:id/add", function(req, res){
 						foundUser.save();
 						// console.log(foundUser);
 						console.log("User Added");
-						req.flash("success", "User added");
+						req.flash("success", "Member added");
 						res.redirect("/index/" + req.params.id + "/show");
 					}
 				}

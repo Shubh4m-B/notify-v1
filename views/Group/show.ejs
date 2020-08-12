@@ -17,25 +17,42 @@
 		<a data-toggle="modal" data-target="#deleteGroup" class="btn btn-md btn-danger float-right" style="box-shadow:none"><i class="trash icon"></i></a>
 	</div>
 </div>
+<div class="container" id="flash-msg">
+	<% if(success && success.length > 0){ %>
+		<div class="alert alert-success" id="flash-success" role="alert">
+		<%= success %>
+		</div>
+	<% } %>
+	<% if(danger && danger.length > 0){ %>
+		<div class="alert alert-danger" id="flash-danger" role="alert">
+			<%= danger %>
+		</div>
+	<% } %>
+	<% if(warning && warning.length > 0){ %>
+		<div class="alert alert-warning" id="flash-warning" role="alert">
+			<%= warning %>
+		</div>
+	<% } %>
+</div>
 
 
 <div class="container">
 	<div class="row">
-		<div class="col-lg-3 member-list">
-			<h2>
+		<div class="col-lg-3">
+			<h2 style="color:white">
 				Members
-				<hr>
 			</h2>
-			<div>
+			<div class="member-list">
 				<strong><%= foundGroup.owner%></strong><span class="badge badge-pill badge-success float-right">Owner</span>
 				<hr>
+				<% foundGroup.User.forEach(function(user){ %>
+					<div>
+						<%=user.username%>
+						<hr>
+					</div>
+				<% }) %>
 			</div>
-			<% foundGroup.User.forEach(function(user){ %>
-				<div>
-					<%=user.username%>
-					<hr>
-				</div>
-			<% }) %>
+			
 		</div>
 		<div class="col-lg-6 task-list">
 			<h2>

@@ -144,10 +144,6 @@ div.container > h1{
 }
 
 #flash-msg{
-	max-width: 700px;
-	position: absolute;
-	z-index: 2;
-	top: 20%;
-	left: 50%;
-	transform: translate(-50%, -50%);
+	margin: auto;
+	
 }
