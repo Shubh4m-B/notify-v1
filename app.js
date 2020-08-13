@@ -135,7 +135,7 @@ app.delete("/index/:id", isLoggedIn, function(req, res){
 	})
 });
 
-//Add USER ROUTE
+//ADD USER ROUTE
 app.post("/index/:id/add", function(req, res){
 	User.findOne({username: req.body.username}, function(err, foundUser){
 		// console.log(foundUser);
@@ -184,6 +184,38 @@ app.post("/index/:id/add", function(req, res){
 	});
 });
 
+//REMOVE USER ROUTE
+app.get("/index/:id/remove/:userId", function(req,res){
+	Group.findById(req.params.id, function(err, foundGroup){
+		if(err){
+			console.log("Error in finding the group!");
+			console.log(err);
+			res.redirect("/index/:id/show");
+		}
+		else{
+			User.findById(req.params.userId, function(err, foundUser){
+				if(err){
+					console.log(err);
+					res.redirect("/index/:id/show");
+				}
+				else{
+					const userIndex = foundGroup.User.indexOf(foundUser);
+					console.log(userIndex);
+					// foundGroup.User.splice(userIndex,1);
+					// foundGroup.save();
+					
+					const groupIndex = foundUser.Group.indexOf(foundGroup);
+					console.log(groupIndex);
+					// foundUser.Group.splice(groupIndex,1);
+					// foundUser.save();
+					
+					console.log("User removed");
+					res.redirect("/index/" + req.params.id + "/show");
+				}
+			})
+		}
+	})
+});
 
 
 //CREATE NEW TASK

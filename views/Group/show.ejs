@@ -9,12 +9,19 @@
 		<p style="text-shadow: #212022 5px 5px 10px;">
 			<%=foundGroup.desc %>
 		</p>
-		<div class="btn-group">
-			<a data-toggle="modal" data-target="#newTask" class="btn btn-md btn-primary"><i class="plus icon"></i></a>
-			<a data-toggle="modal" data-target="#editGroup" class="btn btn-md btn-info"><i class="edit icon"></i></a>
-			<a data-toggle="modal" data-target="#addMember" class="btn btn-md btn-success">Add Member</a>
-		</div>
-		<a data-toggle="modal" data-target="#deleteGroup" class="btn btn-md btn-danger float-right" style="box-shadow:none"><i class="trash icon"></i></a>
+		<% if(currentUser && (foundGroup.owner === currentUser.username)){%>
+			<div class="btn-group">
+				<a data-toggle="modal" data-target="#newTask" class="btn btn-md btn-primary"><i class="plus icon"></i></a>
+				<a data-toggle="modal" data-target="#editGroup" class="btn btn-md btn-info"><i class="edit icon"></i></a>
+				<a data-toggle="modal" data-target="#addMember" class="btn btn-md btn-success">Add Member</a>
+			</div>
+			<a data-toggle="modal" data-target="#deleteGroup" class="btn btn-md btn-danger float-right" style="box-shadow:none"><i class="trash icon"></i></a>
+		<% } else{ %>
+			<div class="btn-group">
+				<a data-toggle="modal" data-target="#newTask" class="btn btn-md btn-primary"><i class="plus icon"></i></a>
+				<a data-toggle="modal" data-target="#editGroup" class="btn btn-md btn-info"><i class="edit icon"></i></a>
+			</div>
+		<% } %>
 	</div>
 </div>
 <div class="container" id="flash-msg">
@@ -47,8 +54,13 @@
 				<hr>
 				<% foundGroup.User.forEach(function(user){ %>
 					<div>
-						<%=user.username%>
-						<hr>
+						<% if(foundGroup.owner!=user.username){ %>
+							<%=user.username%>
+							<% if(foundGroup.owner === currentUser.username){%>
+							<a href="/index/<%=foundGroup._id %>/remove/<%=user._id %>"><span class="float-right" style="color:grey"><i class="times icon"></i></span></a>
+							<% }%>
+							<hr>
+						<% } %>
 					</div>
 				<% }) %>
 			</div>
