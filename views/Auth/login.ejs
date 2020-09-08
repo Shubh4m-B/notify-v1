@@ -1,25 +1,26 @@
 <%- include("../partials/header.ejs"); %>
-<div class="container" id="flash-msg">
-	<% if(success && success.length > 0){ %>
-		<div class="alert alert-success" id="flash-success" role="alert">
-		<%= success %>
-		</div>
-	<% } %>
-	<% if(danger && danger.length > 0){ %>
-		<div class="alert alert-danger" id="flash-danger" role="alert">
-			<%= danger %>
-		</div>
-	<% } %>
-	<% if(warning && warning.length > 0){ %>
-		<div class="alert alert-warning" id="flash-warning" role="alert">
-			<%= warning %>
-		</div>
-	<% } %>
-</div>
+
 <div class="bg">
 	<h1 class="form-header">
 		Login
 	</h1>
+	<div class="container" id="flash-msg">
+		<% if(success && success.length > 0){ %>
+			<div class="alert alert-success" id="flash-success" role="alert">
+			<%= success %>
+			</div>
+		<% } %>
+		<% if(danger && danger.length > 0){ %>
+			<div class="alert alert-danger" id="flash-danger" role="alert">
+				<%= danger %>
+			</div>
+		<% } %>
+		<% if(warning && warning.length > 0){ %>
+			<div class="alert alert-warning" id="flash-warning" role="alert">
+				<%= warning %>
+			</div>
+		<% } %>
+	</div>
 	<form action="/login" method="POST">
 		<div class="card" id="form-card">
 			<div class="card-body">
