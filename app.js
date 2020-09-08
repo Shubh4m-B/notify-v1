@@ -17,7 +17,8 @@ var groupRoutes		= require("./routes/groups.js"),
 	indexRoutes		= require("./routes/index.js"),
 	userRoutes 		= require("./routes/users.js");
 
-mongoose.connect("mongodb://localhost/notify_v2", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
+var url = process.env.DatabaseURL||"mongodb://localhost/notify_v2";
+mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 app.use(bodyParser.urlencoded({extended : true}));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
