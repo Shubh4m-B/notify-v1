@@ -44,7 +44,7 @@ router.get("/register", function(req, res){
 router.post("/register", function(req, res){
 	User.register(new User({username: req.body.username}), req.body.password, function(err, user){
 		if(err){
-			req.flash("warning", "Try another username, this username already exists!");
+			req.flash("warning", "Oops, something is wrong....Try again");
 			res.redirect("/register");
 		}
 		
