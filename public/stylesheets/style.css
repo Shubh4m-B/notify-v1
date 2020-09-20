@@ -148,7 +148,12 @@ div.container > h1{
 	
 }
 #footer{
+	padding-top: 70px;
+	color: white;
 	width: 100%;
-	min-height: 200px;
+	min-height:200px;
 	background-color: #212022;
+}
+p > a{
+	color:white;
 }
