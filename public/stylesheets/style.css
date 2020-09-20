@@ -147,3 +147,8 @@ div.container > h1{
 	margin: auto;
 	
 }
+#footer{
+	width: 100%;
+	min-height: 200px;
+	background-color: #212022;
+}
