@@ -13,4 +13,4 @@
 <br/>
 
 ### Index Page
-<img src="images/Index Page.JPG">
+<img src="images/Index page.JPG">
