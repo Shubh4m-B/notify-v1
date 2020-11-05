@@ -2,7 +2,8 @@
 
 ## What is it
 
-Notify is a Web Application to store all your tasks/notes. One can store all their tasks in the form of different note groups. These note groups can then be shared among other users simply by adding the user to the note group. The added user can then access and add tasks to the group.
+Notify is a note keeping and sharing web based application. Users can create different note groups which can either be for personal use or for a group of users. The user which creates the note group can add more users to the group, who will then have access to the different notes/tasks stored under the group.
+Apart from this, users can update already existing note groups and delete them as well. Same goes with the notes/tasks present inside a particular group.
 
 ---
 
