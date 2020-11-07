@@ -40,3 +40,7 @@ Once the group has been created, it will be visble on the index page. Open it to
 <img src="images/Show note.JPG">
 
 ---
+
+## See Notify Live in action at:
+
+[Click Here](https://vast-tor-28956.herokuapp.com/)
